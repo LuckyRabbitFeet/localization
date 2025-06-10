@@ -21,8 +21,19 @@
   "loadParameters/title": "加载参数",
   "loadParameters/description": "控制模型初始化和加载到内存的方式的设置。",
   "loadParameters/reload": "重新加载以应用更改",
+  "loadParameters/reload/error": "Failed to reload the model",
   "discardChanges": "放弃更改",
   "loadModelToSeeOptions": "加载模型以查看选项",
+  "schematicsError.title": "The config schematics contains errors in the following fields:",
+  "manifestSections": {
+    "structuredOutput/title": "Structured Output",
+    "speculativeDecoding/title": "Speculative Decoding",
+    "sampling/title": "Sampling",
+    "settings/title": "Settings",
+    "toolUse/title": "Tool Use",
+    "promptTemplate/title": "Prompt Template"
+  },
+
   "llm.prediction.systemPrompt/title": "系统提示",
   "llm.prediction.systemPrompt/description": "使用此字段向模型提供背景指令，如一套规则、约束或一般要求。",
   "llm.prediction.systemPrompt/subTitle": "AI 指南",
@@ -61,6 +72,15 @@
   "llm.prediction.llama.presencePenalty/title": "存在惩罚",
   "llm.prediction.llama.tailFreeSampling/title": "尾部自由采样",
   "llm.prediction.llama.locallyTypicalSampling/title": "局部典型采样",
+  "llm.prediction.llama.xtcProbability/title": "XTC Sampling Probability",
+  "llm.prediction.llama.xtcProbability/subTitle": "The XTC (Exclude Top Choices) sampler will only be activated with this probability per generated token. XTC sampling can boost creativity and reduce clichés",
+  "llm.prediction.llama.xtcProbability/info": "XTC (Exclude Top Choices) sampling will only be activated with this probability, per generated token. XTC sampling usually boosts creativity and reduces clichés",
+  "llm.prediction.llama.xtcThreshold/title": "XTC Sampling Threshold",
+  "llm.prediction.llama.xtcThreshold/subTitle": "XTC (Exclude Top Choices) threshold. With a chance of `xtc-probability`, search for tokens with probabilities between `xtc-threshold` and 0.5, and removes all such tokens except the least probable one",
+  "llm.prediction.llama.xtcThreshold/info": "XTC (Exclude Top Choices) threshold. With a chance of `xtc-probability`, search for tokens with probabilities between `xtc-threshold` and 0.5, and removes all such tokens except the least probable one",
+  "llm.prediction.mlx.topKSampling/title": "Top K Sampling",
+  "llm.prediction.mlx.topKSampling/subTitle": "Limits the next token to one of the top-k most probable tokens. Acts similarly to temperature",
+  "llm.prediction.mlx.topKSampling/info": "Limits the next token to one of the top-k most probable tokens. Acts similarly to temperature",
   "llm.prediction.onnx.topKSampling/title": "Top K 采样",
   "llm.prediction.onnx.topKSampling/subTitle": "将下一个词元（token）限制为前 k 个最可能的词元（token）。作用类似于温度",
   "llm.prediction.onnx.topKSampling/info": "来自 ONNX 文档：\n\n保留最高概率词汇表词元（token）的数量以进行 top-k 过滤\n\n• 默认情况下此过滤器关闭",
@@ -74,8 +94,22 @@
   "llm.prediction.structured/title": "结构化输出",
   "llm.prediction.structured/info": "结构化输出",
   "llm.prediction.structured/description": "高级：您可以提供一个 JSON 模式来强制模型输出特定格式。阅读[文档](https://lmstudio.ai/docs/advanced/structured-output)了解更多信息",
+  "llm.prediction.tools/title": "Tool Use",
+  "llm.prediction.tools/description": "Advanced: you can provide a JSON-compliant list of tools for the model to request calls to. Read the [documentation](https://lmstudio.ai/docs/advanced/tool-use) to learn more",
+  "llm.prediction.tools/serverPageDescriptionAddon": "Pass this through the request body as `tools` when using the server API",
   "llm.prediction.promptTemplate/title": "提示模板",
   "llm.prediction.promptTemplate/subTitle": "聊天中消息发送给模型的格式。更改此设置可能会引入意外行为 - 确保您知道自己在做什么！",
+  "llm.prediction.speculativeDecoding.numDraftTokensExact/title": "Draft Tokens to Generate",
+  "llm.prediction.speculativeDecoding.numDraftTokensExact/subTitle": "The number of tokens to generate with the draft model per main model token. Find the sweet spot of compute vs. reward",
+  "llm.prediction.speculativeDecoding.minContinueDraftingProbability/title": "Drafting Probability Cutoff",
+  "llm.prediction.speculativeDecoding.minContinueDraftingProbability/subTitle": "Continue drafting until a token's probability falls below this threshold. Higher values generally mean lower risk, lower reward",
+  "llm.prediction.speculativeDecoding.minDraftLengthToConsider/title": "Min Draft Size",
+  "llm.prediction.speculativeDecoding.minDraftLengthToConsider/subTitle": "Drafts smaller than this will be ignored by the main model. Higher values generally mean lower risk, lower reward",
+  "llm.prediction.speculativeDecoding.maxTokensToDraft/title": "Max Draft Size",
+  "llm.prediction.speculativeDecoding.maxTokensToDraft/subTitle": "Max number of tokens allowed in a draft. Ceiling if all token probs are > the cutoff. Lower values generally mean lower risk, lower reward",
+  "llm.prediction.speculativeDecoding.draftModel/title": "Draft Model",
+  "llm.prediction.reasoning.parsing/title": "Reasoning Section Parsing",
+  "llm.prediction.reasoning.parsing/subTitle": "How to parse reasoning sections in the model's output",
 
   "llm.load.contextLength/title": "上下文长度",
   "llm.load.contextLength/subTitle": "模型可以一次性关注的词元（token）最大数量。请参阅“推理参数”下的“对话溢出”选项以获取更多管理方式",
@@ -111,6 +145,38 @@
   "llm.load.llama.tryMmap/title": "尝试 mmap()",
   "llm.load.llama.tryMmap/subTitle": "提高模型的加载时间。禁用此功能可能在模型大于可用系统 RAM 时提高性能",
   "llm.load.llama.tryMmap/info": "直接从磁盘加载模型文件到内存",
+  "llm.load.llama.cpuThreadPoolSize/title": "CPU Thread Pool Size",
+  "llm.load.llama.cpuThreadPoolSize/subTitle": "Number of CPU threads to allocate to the thread pool used for model computation",
+  "llm.load.llama.cpuThreadPoolSize/info": "The number of CPU threads to allocate to the thread pool used for model computation. Increasing the number of threads does not always correlate with better performance. The default is <{{dynamicValue}}>.",
+  "llm.load.llama.kCacheQuantizationType/title": "K Cache Quantization Type",
+  "llm.load.llama.kCacheQuantizationType/subTitle": "Lower values reduce memory usage but may decrease quality. The effect varies significantly between models.",
+  "llm.load.llama.vCacheQuantizationType/title": "V Cache Quantization Type",
+  "llm.load.llama.vCacheQuantizationType/subTitle": "Lower values reduce memory usage but may decrease quality. The effect varies significantly between models.",
+  "llm.load.llama.vCacheQuantizationType/turnedOnWarning": "⚠️ You must disable this value if Flash Attention is not enabled",
+  "llm.load.llama.vCacheQuantizationType/disabledMessage": "Can only be turned on when Flash Attention is enabled",
+  "llm.load.llama.vCacheQuantizationType/invalidF32MetalState": "⚠️ You must disable flash attention when using F32",
+  "llm.load.mlx.kvCacheBits/title": "KV Cache Quantization",
+  "llm.load.mlx.kvCacheBits/subTitle": "Number of bits that the KV cache should be quantized to",
+  "llm.load.mlx.kvCacheBits/info": "Number of bits that the KV cache should be quantized to",
+  "llm.load.mlx.kvCacheBits/turnedOnWarning": "Context Length setting is ignored when using KV Cache Quantization",
+  "llm.load.mlx.kvCacheGroupSize/title": "KV Cache Quantization: Group Size",
+  "llm.load.mlx.kvCacheGroupSize/subTitle": "Group size during quantization operation for the KV cache. Higher group size reduces memory usage but may decrease quality",
+  "llm.load.mlx.kvCacheGroupSize/info": "Number of bits that the KV cache should be quantized to",
+  "llm.load.mlx.kvCacheQuantizationStart/title": "KV Cache Quantization: Start quantizing when ctx crosses this length",
+  "llm.load.mlx.kvCacheQuantizationStart/subTitle": "Context length threshold to start quantizating the KV cache",
+  "llm.load.mlx.kvCacheQuantizationStart/info": "Context length threshold to start quantizating the KV cache",
+  "llm.load.mlx.kvCacheQuantization/title": "KV Cache Quantization",
+  "llm.load.mlx.kvCacheQuantization/subTitle": "Quantize the model's KV cache. This may result in faster generation and lower memory footprint,\nat the expense of the quality of the model output.",
+  "llm.load.mlx.kvCacheQuantization/bits/title": "KV cache quantization bits",
+  "llm.load.mlx.kvCacheQuantization/bits/tooltip": "Number of bits to quantize the KV cache to",
+  "llm.load.mlx.kvCacheQuantization/bits/bits": "Bits",
+  "llm.load.mlx.kvCacheQuantization/groupSize/title": "Group size strategy",
+  "llm.load.mlx.kvCacheQuantization/groupSize/accuracy": "Accuracy",
+  "llm.load.mlx.kvCacheQuantization/groupSize/balanced": "Balanced",
+  "llm.load.mlx.kvCacheQuantization/groupSize/speedy": "Speedy",
+  "llm.load.mlx.kvCacheQuantization/groupSize/tooltip": "Advanced: Quantized 'matmul group size' configuration\n\n• Accuracy = group size 32\n• Balanced = group size 64\n• Speedy = group size 128\n",
+  "llm.load.mlx.kvCacheQuantization/quantizedStart/title": "Start quantizing when ctx reaches this length",
+  "llm.load.mlx.kvCacheQuantization/quantizedStart/tooltip": "When the context reaches this amount of tokens,\nbegin quantizing the KV cache",
 
   "embedding.load.contextLength/title": "上下文长度",
   "embedding.load.contextLength/subTitle": "模型可以一次性关注的词元（token）最大数量。请参阅“推理参数”下的“对话溢出”选项以获取更多管理方式",
@@ -150,7 +216,10 @@
     "excluded/title": "可能不适用",
     "excluded/description": "以下字段包含在预设中，但在当前上下文中不适用。",
     "legacy/title": "旧版预设",
-    "legacy/description": "这是一个旧版预设。它包括以下字段，这些字段现在要么自动处理，要么不再适用。"
+    "legacy/description": "这是一个旧版预设。它包括以下字段，这些字段现在要么自动处理，要么不再适用。",
+    "button/publish": "Publish to Hub",
+    "button/pushUpdate": "Push Changes to Hub",
+    "button/export": "Export"
   },
 
   "customInputs": {
@@ -159,6 +228,12 @@
     },
     "checkboxNumeric": {
       "off": "关闭"
+    },
+    "llamaCacheQuantizationType": {
+      "off": "OFF"
+    },
+    "mlxKvCacheBits": {
+      "off": "OFF"
     },
     "stringArray": {
       "empty": "<空>"
@@ -205,6 +280,44 @@
     "llamaAccelerationOffloadRatio": {
       "max": "最大",
       "off": "关闭"
+    },
+    "llamaAccelerationSplitStrategy": {
+      "evenly": "Evenly",
+      "favorMainGpu": "Favor Main GPU"
+    },
+    "speculativeDecodingDraftModel": {
+      "readMore": "Read how it works",
+      "placeholder": "Select a compatible draft model",
+      "noCompatible": "No compatible draft models found for your current model selection",
+      "stillLoading": "Identifying compatible draft models...",
+      "notCompatible": "The selected draft model (<draft/>) is not compatible with the current model selection (<current/>).",
+      "off": "OFF",
+      "loadModelToSeeOptions": "Load model <keyboard-shortcut /> to see compatible options",
+      "compatibleWithNumberOfModels": "Recommended for at least {{dynamicValue}} of your models",
+      "recommendedForSomeModels": "Recommended for some models",
+      "recommendedForLlamaModels": "Recommended for Llama models",
+      "recommendedForQwenModels": "Recommended for Qwen models",
+      "onboardingModal": {
+        "introducing": "Introducing",
+        "speculativeDecoding": "Speculative Decoding",
+        "firstStepBody": "Inference speedup for <custom-span>llama.cpp</custom-span> and <custom-span>MLX</custom-span> models",
+        "secondStepTitle": "Inference Speedup with Speculative Decoding",
+        "secondStepBody": "Speculative Decoding is a technique involving the collaboration of two models:\n - A larger \"main\" model\n - A smaller \"draft\" model\n\nDuring generation, the draft model rapidly proposes tokens for the larger main model to verify. Verifying tokens is a much faster process than actually generating them, which is the source of the speed gains. **Generally, the larger the size difference between the main model and the draft model, the greater the speed-up**.\n\nTo maintain quality, the main model only accepts tokens that align with what it would have generated itself, enabling the response quality of the larger model at faster inference speeds. Both models must share the same vocabulary.",
+        "draftModelRecommendationsTitle": "Draft model recommendations",
+        "basedOnCurrentModels": "Based on your current models",
+        "close": "Close",
+        "next": "Next",
+        "done": "Done"
+      },
+      "speculativeDecodingLoadModelToSeeOptions": "Please load a model first <model-badge /> ",
+      "errorEngineNotSupported": "Speculative decoding requires at least version {{minVersion}} of the engine {{engineName}}. Please update the engine (<key/>) and reload the model to use this feature.",
+      "errorEngineNotSupported/noKey": "Speculative decoding requires at least version {{minVersion}} of the engine {{engineName}}. Please update the engine and reload the model to use this feature."
+    },
+    "llmReasoningParsing": {
+      "startString/label": "Start String",
+      "startString/placeholder": "Enter the start string...",
+      "endString/label": "End String",
+      "endString/placeholder": "Enter the end string..."
     }
   },
   "saveConflictResolution": {
@@ -226,6 +339,13 @@
     "cancel": "取消"
   },
   "empty": "<空>",
+  "noModelSelected": "No models selected",
+  "apiIdentifier.label": "API Identifier",
+  "apiIdentifier.hint": "Optionally provide an identifier for this model. This will be used in API requests. Leave blank to use the default identifier.",
+  "idleTTL.label": "Auto Unload If Idle (TTL)",
+  "idleTTL.hint": "If set, the model will be automatically unloaded after being idle for the specified amount of time.",
+  "idleTTL.mins": "mins",
+
   "presets": {
     "title": "预设",
     "commitChanges": "提交更改",
@@ -257,13 +377,135 @@
     "discardChanges": "丢弃未保存的更改",
     "discardChanges/info": "丢弃所有未提交的更改并恢复预设至原始状态",
     "newEmptyPreset": "创建新的空预设...",
+    "importPreset": "Import",
     "contextMenuSelect": "选择预设",
-    "contextMenuDelete": "删除"
+    "contextMenuDelete": "删除",
+    "contextMenuShare": "Publish...",
+    "contextMenuOpenInHub": "View on Hub",
+    "contextMenuPushChanges": "Push changes to Hub",
+    "contextMenuPushingChanges": "Pushing...",
+    "contextMenuPushedChanges": "Changes pushed",
+    "contextMenuExport": "Export File",
+    "contextMenuRevealInExplorer": "Reveal in File Explorer",
+    "contextMenuRevealInFinder": "Reveal in Finder",
+    "share": {
+      "title": "Publish Preset",
+      "action": "Share your preset for others to download, like, and fork",
+      "presetOwnerLabel": "Owner",
+      "uploadAs": "Your preset will be created as {{name}}",
+      "presetNameLabel": "Preset Name",
+      "descriptionLabel": "Description (optional)",
+      "loading": "Publishing...",
+      "success": "Preset Successfully Pushed",
+      "presetIsLive": "<preset-name /> is now live on the Hub!",
+      "close": "Close",
+      "confirmViewOnWeb": "View on web",
+      "confirmCopy": "Copy URL",
+      "confirmCopied": "Copied!",
+      "pushedToHub": "Your preset was pushed to the Hub",
+      "descriptionPlaceholder": "Enter a description...",
+      "willBePublic": "Publishing your preset will make it public",
+      "publicSubtitle": "Your preset is <custom-bold>Public</custom-bold>. Others can download and fork it on lmstudio.ai",
+      "confirmShareButton": "Publish",
+      "error": "Failed to publish preset",
+      "createFreeAccount": "Create a free account in the Hub to publish presets"
+    },
+    "update": {
+      "title": "Push Changes to Hub",
+      "title/success": "Preset Successfully Updated",
+      "subtitle": "Make changes to <custom-preset-name /> and push them to the Hub",
+      "descriptionLabel": "Description",
+      "descriptionPlaceholder": "Enter a description...",
+      "loading": "Pushing...",
+      "cancel": "Cancel",
+      "createFreeAccount": "Create a free account in the Hub to publish presets",
+      "error": "Failed to push update",
+      "confirmUpdateButton": "Push"
+    },
+    "import": {
+      "title": "Import a Preset from File",
+      "dragPrompt": "Drag and drop preset JSON files or <custom-link>select from your computer</custom-link>",
+      "remove": "Remove",
+      "cancel": "Cancel",
+      "importPreset_zero": "Import Preset",
+      "importPreset_one": "Import Preset",
+      "importPreset_other": "Import {{count}} Presets",
+      "selectDialog": {
+        "title": "Select Preset File (.json)",
+        "button": "Import"
+      },
+      "error": "Failed to import preset",
+      "resultsModal": {
+        "titleSuccessSection_one": "Imported 1 preset successfully",
+        "titleSuccessSection_other": "Imported {{count}} presets successfully",
+        "titleFailSection_zero": "",
+        "titleFailSection_one": "({{count}} failed)",
+        "titleFailSection_other": "({{count}} failed)",
+        "titleAllFailed": "Failed to import presets",
+        "importMore": "Import More",
+        "close": "Done",
+        "successBadge": "Success",
+        "alreadyExistsBadge": "Preset already exists",
+        "errorBadge": "Error",
+        "invalidFileBadge": "Invalid file",
+        "otherErrorBadge": "Failed to import preset",
+        "errorViewDetailsButton": "View Details",
+        "seeError": "See Error",
+        "noName": "No preset name",
+        "useInChat": "Use in Chat"
+      },
+      "importFromUrl": {
+        "button": "Import from URL...",
+        "title": "Import from URL",
+        "back": "Import from File...",
+        "action": "Paste the LM Studio Hub URL of the preset you want to import below",
+        "invalidUrl": "Invalid URL. Please make sure you are pasting a correct LM Studio Hub URL.",
+        "tip": "You can install the preset directly with the {{buttonName}} button in LM Studio Hub",
+        "confirm": "Import",
+        "cancel": "Cancel",
+        "loading": "Importing...",
+        "error": "Failed to download preset."
+      }
+    },
+    "download": {
+      "title": "Pull <preset-name /> from LM Studio Hub",
+      "subtitle": "Save <custom-name /> to your presets. Doing so you will allow you to use this preset in the app",
+      "button": "Pull",
+      "button/loading": "Pulling...",
+      "cancel": "Cancel",
+      "error": "Failed to download preset."
+    },
+    "inclusiveness": {
+      "speculativeDecoding": "Include in Preset"
+    }
   },
 
   "flashAttentionWarning": "闪电注意力是一项实验性功能，可能会导致某些模型出现问题。如果您遇到问题，请尝试禁用它。",
+  "llamaKvCacheQuantizationWarning": "KV Cache Quantization is an experimental feature that may cause issues with some models. Flash Attention must be enabled for V cache quantization. If you encounter problems, reset to the default \"F16\".",
 
   "seedUncheckedHint": "随机种子",
   "ropeFrequencyBaseUncheckedHint": "自动",
-  "ropeFrequencyScaleUncheckedHint": "自动"
+  "ropeFrequencyScaleUncheckedHint": "自动",
+
+  "hardware": {
+    "advancedGpuSettings": "Advanced GPU Settings",
+    "advancedGpuSettings.info": "If you're unsure, leave these at their default values",
+    "advancedGpuSettings.reset": "Reset to default",
+    "environmentVariables": {
+      "title": "Env. Variables",
+      "description": "Active environment variables during model lifetime.",
+      "key.placeholder": "Select var...",
+      "value.placeholder": "Value"
+    },
+    "mainGpu": {
+      "title": "Main GPU",
+      "description": "The GPU to prioritize for model computation.",
+      "placeholder": "Select main GPU..."
+    },
+    "splitStrategy": {
+      "title": "Split Strategy",
+      "description": "How to split model computation across GPUs.",
+      "placeholder": "Select split strategy..."
+    }
+  }
 }
