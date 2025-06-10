@@ -89,6 +89,7 @@
   "actions/createFolderAtRoot": "新建文件夹...",
   "actions/createFolderAtRoot/error": "在根目录创建文件夹失败",
   "actions/createChat/error": "创建聊天失败",
+  "actions/deleteChat/errorTitle": "删除聊天失败",
   
   "userFile/fileSizeLimit": "文件大小限制为",
   "userFile/noImageSupport": "模型不支持图片输入",
@@ -98,7 +99,12 @@
   "userFile/unsupportedFileType": "不支持的文件类型 - 仅支持图片、PDF 和 .txt 文件。",
   "userFile/maxFilesPerMessage": "每条消息的最大文件数已达到。不能添加超过 {{files}} 个文件。",
   "userFile/maxFileSizePerMessage": "每条消息的最大文件大小已达到。不能添加超过 {{size}} 的文件。",
+  "userFile/maxFileSizePerConversation": "每次对话的最大文件大小已达到。不能添加超过 {{size}} 的文件。",
+  "userFile/failedToUploadError/title": "上传文件失败",
+  "userFile/failedToAddFile/title": "无法将文件添加到聊天",
   "errorTitle": "错误",
+  "userFile/chatTerminalDocumentsCount_one": "聊天中有 {{count}} 个文档",
+  "userFile/chatTerminalDocumentsCount_other": "聊天中有 {{count}} 个文档",
   
   "prediction/busyModel/title": "模型忙碌中",
   "prediction/busyModel/message": "请等待模型完成后再试",
@@ -118,10 +124,30 @@
   "style/viewMode/plaintext": "纯文本",
   "style/viewMode/monospace": "等宽字体",
   
+  "speculativeDecodingVisualization/toggle": "可视化已接受的草稿词元（draft token）",
+  "speculativeDecodingVisualization/fromDraftModel_one": "已接受的草稿词元（draft token）",
+  "speculativeDecodingVisualization/fromDraftModel_other": "已接受的草稿词元（draft token）",
+  "speculativeDecodingVisualization/cannotChangeViewMode": "可视化草稿词元（draft token）时，禁用视图模式选择。",
+
   "style/fontSize/label": "字体大小",
   "style/fontSize/medium": "默认",
   "style/fontSize/large": "大",
   "style/fontSize/small": "小",
+
+  "style/debugBlocks/label": "显示调试信息块",
+
+  "style/thinkingUI/label": "默认展开推理块",
+  "style/chatFullWidth/label": "将聊天容器扩展到窗口宽度",
+
+  "messageBlocks": {
+    "expandBlockTooltip": "展开内容",
+    "collapseBlockTooltip": "折叠内容",
+    "debug": {
+      "label": "DEBUG INFO",
+      "collapseTooltip": "折叠调试信息块",
+      "expandTooltip": "展开调试信息块"
+    }
+  },
   
   "topBarActions/duplicateChat": "复制聊天",
   "topBarActions/clearChat": "清除所有消息",
@@ -131,5 +157,72 @@
   
   "noModels.indexing": "正在索引模型文件...（这可能需要一段时间）",
   "noModels.downloading": "正在下载您的第一个LLM...",
-  "noModels": "还没有LLM！下载一个开始吧！"
+  "noModels": "还没有LLM！下载一个开始吧！",
+
+  "plugins": {
+    "pluginTrigger": {
+      "noPlugins": "插件",
+      "multiplePlugins": "{{dynamicValue}} 个插件"
+    },
+    "pluginSelect": {
+      "title": "插件",
+      "dropdown": {
+        "configure": "配置",
+        "disable": "禁用",
+        "fork": "Fork",
+        "uninstall": "卸载"
+      },
+      "actionButtons": {
+        "create": "+ 创建",
+        "import": "导入",
+        "discover": "探索"
+      },
+      "recentlyCreated": {
+        "title": "最近创建的插件",
+        "placeholder": "您创建的插件将显示在这里"
+      },
+      "startRunningDevelopmentPlugin/error": "在开发模式下启动运行插件失败",
+      "stopRunningDevelopmentPlugin/error": "在开发模式下停止运行插件失败"
+    },
+    "pluginConfiguration": {
+      "title": "插件配置",
+      "selectAPlugin": "选择插件以编辑其配置",
+      "preprocessorAndGenerator": "该插件包含自定义预处理器和生成器",
+      "generatorOnly": "该插件包含自定义生成器",
+      "preprocessorOnly": "该插件包含自定义预处理器"
+    },
+    "instructions": {
+      "runTheFollowing": "要运行您的插件，请打开终端并输入",
+      "pushTo": "通过推送到 Hub 与他人分享您的插件（可选）",
+      "createdSuccessfully": "插件创建成功",
+      "creatingPlugin": "插件创建中...",
+      "projectFilesTitle": "项目文件",
+      "buttons": {
+        "documentation": "文档",
+        "dismiss": "摒弃",
+        "publish": "发布",
+        "openInZed": "在 Zed 中打开",
+        "openInVscode": "在 VS Code 中打开",
+        "revealInFinder": "在 Finder 中显示",
+        "openInFileExplorer": "在文件资源管理器中打开"
+      }
+    }
+  },
+
+  "genInfo": {
+    "tokensPerSecond": "{{tokensPerSecond}} tok/sec",
+    "predictedTokensCount": "{{predictedTokensCount}} tokens",
+    "timeToFirstTokenSec": "{{timeToFirstTokenSec}}s to first token",
+    "stopReason": "停止原因: {{stopReason}}",
+    "stopReason.userStopped": "用户停止",
+    "stopReason.modelUnloaded": "模型已卸载",
+    "stopReason.failed": "生成失败",
+    "stopReason.eosFound": "找到 EOS 词元(token)",
+    "stopReason.stopStringFound": "找到停止字符串",
+    "stopReason.toolCalls": "工具调用",
+    "stopReason.maxPredictedTokensReached": "已达到最大预测词元(token)",
+    "stopReason.contextLengthReached": "已达到上下文长度限制",
+    "speculativeDecodedBy": "草稿模型（draft model）: {{decodedBy}}",
+    "speculativeDecodingStats": "已接受 {{accepted}}/{{total}} 草稿词元 ({{percentage}}%)"
+  }
 }
